@@ -84,14 +84,15 @@ abstract class TestCase extends Orchestra
         $app['config']->set('filesystems.disks.media', [
             'driver' => 'local',
             'root' => $this->getMediaDirectory(),
+            'visibility' => 'public',
         ]);
 
 
         // FIXME these config setting needs to have a look
         $app['config']->set('filesystems.disks.media-private', [
-
             'driver' => 'local',
-             'root' => $this->getMediaDirectory('storage'),
+            'root' => $this->getMediaDirectory('storage'),
+            'visibility' => 'private',
         ]);
 
         $app['config']->set('filesystems.disks.uploads', [
@@ -196,5 +197,9 @@ abstract class TestCase extends Orchestra
                 throw $e;
             }
         });
+    }
+
+    public function getRequest($data) {
+        return Request::create('test', 'GET', $data);
     }
 }

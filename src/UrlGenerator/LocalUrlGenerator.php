@@ -2,12 +2,13 @@
 
 namespace Brackets\Media\UrlGenerator;
 
+use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\UrlGenerator\LocalUrlGenerator as SpatieLocalUrlGenerator;
 
 class LocalUrlGenerator extends SpatieLocalUrlGenerator {
 
     public function getUrl(): string {
-        if($this->media->disk == 'media-private') {
+        if(Storage::disk($this->media->disk)->getConfig()->get('visibility') == 'private') {
             $url = $this->getPathRelativeToRoot();
             return route('brackets/media:view', [], false) . '?path=' . $this->makeCompatibleForNonUnixHosts($url);
         } else {

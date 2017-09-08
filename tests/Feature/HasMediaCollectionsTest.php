@@ -667,9 +667,4 @@ class HasMediaCollectionsTest extends TestCase
         $this->testModelWithCollections->addMediaCollection('mixed_mime_type')->accepts('image/jpeg', 'application/pdf', 'application/msword');
         $this->assertCount(2, $this->testModelWithCollections->getMediaCollections()->filter->isImage());
     }
-
-    private function getRequest($data) { 
-        return Request::create('test', 'GET', $data);        
-    }
-
 }
